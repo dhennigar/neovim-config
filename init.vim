@@ -9,9 +9,20 @@ set backspace=indent,eol,start
 " avoid hit-enter prompts
 set cmdheight=2
 
-" Shortcuts for project or home folders
-nnoremap <Leader>p :cd D:\Projects<CR>
-nnoremap <Leader>h :cd ~<CR>
+" Windows specific settings
+if has('win32')
+  " shortcuts for home and project folders
+  nnoremap <Leader>p :cd D:\Projects<CR>
+  nnoremap <Leader>h :cd ~<CR>
+  " shell settings for powershell
+  let &shell = has('win32') ? 'powershell' : 'pwsh'
+  let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+  set shellquote= shellxquote=
+  " fix for windows terminal
+  set t_u7=
+endif
 
 " Shortcuts for terminals, splits etc.
 nnoremap <Leader>tv :vsplit<CR>:term<CR>
@@ -26,21 +37,12 @@ nnoremap <M-j> <C-w><C-j>
 nnoremap <M-k> <C-w><C-k>
 nnoremap <M-l> <C-w><C-l>
 
-" shell settings
-let &shell = has('win32') ? 'powershell' : 'pwsh'
-let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-set shellquote= shellxquote=
-
 " Indenting
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
-
-" Fixes for windows terminal
-set t_u7=
+set smartindent
 
 " Omnicompletion
 filetype plugin indent on
@@ -59,7 +61,7 @@ Plug 'tpope/vim-surround'			" add/remove delimiters
 Plug 'tpope/vim-fugitive'			" git integration
 Plug 'tpope/vim-commentary'			" comment stuff out
 Plug 'tpope/vim-vinegar'			" better netrw
-Plug 'tpope/vim-sleuth'				" tab settings read from buffer
+" Plug 'tpope/vim-sleuth'				" tab settings read from buffer
 Plug 'tpope/vim-markdown'			" markdown runtime files
 Plug 'tpope/vim-flagship'			" status line
 Plug 'tpope/vim-abolish'			" quickly search and replace words
@@ -77,10 +79,13 @@ Plug 'jalvesaq/Nvim-R'
 " Quality of life things
 Plug 'airblade/vim-rooter'
 
-" NeoVim as a notetaking tool
-Plug 'Aarleks/zettel.vim'
+" Fuzzy finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+" Pandoc
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 call plug#end()
 
@@ -101,11 +106,12 @@ set path+=**
 set wildmenu
 set incsearch
 set hlsearch
+set ic
 nnoremap <silent> <C-c> :let @/ = "" <CR>
 let @/ = ""
 
 " Rooter
-let g:rooter_patterns = ['.git', 'renv', 'scripts', 'data', 'results']
+let g:rooter_patterns = ['requirements.txt', 'src', '.git', 'renv', 'scripts', 'data', 'results']
 
 " TreeSitter
 lua << EOF
@@ -131,6 +137,3 @@ let R_nvimpager = 'tab'                                               " I don't 
 let R_objbr_place = 'console,above'                                   " object browser placement
 let R_assign_map = '<M-,>'
 inoremap <M-m> %>%<CR>
-
-" Zettelkasten
-let g:zettelkasten = 'C:\Users\dhenn\Notes\'
