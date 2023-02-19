@@ -1,12 +1,13 @@
 " daniel's neovim configuration
 
+" basics
 let maplocalleader = ';'
 let mapleader = ','
 set cursorline
 set backspace=indent,eol,start
 set cmdheight=2
 
-" Windows specific settings
+" windows specific settings
 if has('win32')
   nnoremap <Leader>p :cd D:\Projects<CR>
   nnoremap <Leader>h :cd ~<CR>
@@ -44,16 +45,16 @@ inoremap <C-@> <C-Space>
 
 set noswapfile
 
-" Vim-Plug
+" vim-plug
 call plug#begin()
 
 Plug 'tpope/vim-surround'			" add/remove delimiters
 Plug 'tpope/vim-fugitive'			" git integration
 Plug 'tpope/vim-commentary'			" comment stuff out
 Plug 'tpope/vim-vinegar'			" better netrw
-Plug 'tpope/vim-markdown'			" markdown runtime files
+" Plug 'tpope/vim-markdown'			" markdown runtime files
 Plug 'tpope/vim-flagship'			" status line
-Plug 'tpope/vim-abolish'			" quickly search and replace words
+" Plug 'tpope/vim-abolish'			" quickly search and replace words
 
 Plug 'folke/tokyonight.nvim'
 Plug 'ellisonleao/gruvbox.nvim'
@@ -69,7 +70,6 @@ Plug 'airblade/vim-rooter'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
 
 call plug#end()
 
@@ -94,28 +94,47 @@ let @/ = ""
 
 " vim-rooter
 let g:rooter_patterns = ['requirements.txt', 'src', '.git', 'renv', 'scripts', 'data', 'results']
+let g:rooter_change_directory_for_non_project_files = ''
 
 " nvim-treesitter
 lua << EOF
- require 'nvim-treesitter.configs'.setup {
-   sync_install = true,
-   auto_install = true,
-   highlight = {
-     enable = true,
-     additional_vim_regex_highlighting = false,
-   },
-   indent = {
-     enable = true
-   }
- }
- require 'nvim-treesitter.install'.compilers = { "clang", "gcc" }
+    require 'nvim-treesitter.configs'.setup {
+       sync_install = true,
+       auto_install = true,
+       highlight = {
+         enable = true,
+         additional_vim_regex_highlighting = false,
+       },
+       indent = {
+         enable = true
+       }
+     }
+    require 'nvim-treesitter.install'.compilers = { "clang", "gcc" }
 EOF
 
-" Nvim-R
-let R_nvim_wd = 1                                                     " use nvim's working directory
-let R_rconsole_width = winwidth(0) / 2                                " the R console is 50% of the screen width
-autocmd VimResized * let R_rconsole_width = winwidth(0) / 2           " resize the R console when the windows size changes
-let R_nvimpager = 'tab'                                               " I don't remember what this does
-let R_objbr_place = 'console,above'                                   " object browser placement
+" nvim-r
+let R_nvim_wd = 1
+let R_rconsole_width = winwidth(0) / 2
+autocmd VimResized * let R_rconsole_width = winwidth(0) / 2
+let R_nvimpager = 'tab'
+let R_objbr_place = 'console,above'
 let R_assign_map = '<M-,>'
-inoremap <M-m> %>%<CR>
+autocmd Filetype r inoremap <M-.> <space>%>%<CR>
+
+" zettelkasten
+function NewNote (title)
+    exec 'split ~/Notes/' . a:title . '.md'
+    exec 'normal!i# ' . a:title
+    exec '.s/-/ /g'
+endfunction
+
+function SearchNotes ()
+    new
+    exec 'FZF ~/Notes/'
+endfunction
+
+command -nargs=1 NewNote :call NewNote(<f-args>)
+command -nargs=0 SearchNotes :call SearchNotes()
+
+nnoremap <leader>nn :NewNote<space>
+nnoremap <leader>ns :SearchNotes<CR>
