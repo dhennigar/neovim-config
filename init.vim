@@ -9,16 +9,16 @@ set cmdheight=2
 
 " windows specific settings
 if has('win32')
-  nnoremap <Leader>p :cd D:\Projects<CR>
-  nnoremap <Leader>h :cd ~<CR>
+    nnoremap <Leader>p :cd D:\Projects<CR>
+    nnoremap <Leader>h :cd ~<CR>
 
-  let &shell = has('win32') ? 'powershell' : 'pwsh'
-  let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-  let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-  let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-  set shellquote= shellxquote=
+    let &shell = has('win32') ? 'powershell' : 'pwsh'
+    let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+    let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+    set shellquote= shellxquote=
 
-  set t_u7= " fix for windows terminal
+    set t_u7= " fix for windows terminal
 endif
 
 " terminal and split shortcuts
