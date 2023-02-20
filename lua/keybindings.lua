@@ -30,4 +30,3 @@ vim.cmd[[
     nnoremap <C-l> <C-w>l
 ]]
 
-print("hello world")
