@@ -18,8 +18,12 @@ Plug('marko-cerovac/material.nvim')
 Plug('rockerBOO/boo-colorscheme-nvim')
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 
+-- R
 Plug('jalvesaq/Nvim-R')
 Plug('jalvesaq/cmp-nvim-r')
+
+-- Python
+Plug 'skywind3000/asyncrun.vim'
 
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/cmp-nvim-lsp')
@@ -116,7 +120,7 @@ cmp.setup({
     },
     window = {
       -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
       ["<Tab>"] = cmp.mapping(function(fallback)
@@ -157,3 +161,15 @@ require 'cmp_nvim_r'.setup({
       filetypes = {'r', 'rmd', 'quarto'},
       doc_width = 58
 })
+
+-- Nvim-R
+vim.g.R_nvim_wd = 1
+vim.g.R_rconsole_width = 1
+vim.g.R_nvimpager = 'tab'
+vim.g.R_objbr_place = 'console,above'
+vim.g.R_assign_map = '<M-,>'
+vim.cmd[[ inoremap <M-.> <Space>%>%<CR> ]]
+vim.cmd[[ autocmd VimResized * let R_rconsole_width = winwidth(0) / 2 ]]
+
+--ASyncRun
+vim.g.asyncrun_open = 1
