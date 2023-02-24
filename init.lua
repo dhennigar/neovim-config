@@ -12,7 +12,7 @@ end
 vim.o.showtabline = 0
 vim.o.laststatus = 2
 vim.o.cmdheight = 2
--- vim.o.guioptions-=e
+vim.o.signcolumn = 'yes'
 
 vim.g.maplocalleader = ';'
 vim.g.mapleader = ';'

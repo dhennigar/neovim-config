@@ -18,12 +18,8 @@ Plug('marko-cerovac/material.nvim')
 Plug('rockerBOO/boo-colorscheme-nvim')
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 
--- R
 Plug('jalvesaq/Nvim-R')
 Plug('jalvesaq/cmp-nvim-r')
-
--- Python
-Plug 'skywind3000/asyncrun.vim'
 
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/cmp-nvim-lsp')
@@ -98,7 +94,15 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
   lsp_defaults.capabilities,
   require('cmp_nvim_lsp').default_capabilities()
 )
-lspconfig.lua_ls.setup {}
+lspconfig.lua_ls.setup {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = {'vim', 'require'},
+            },
+        },
+    },
+}
 lspconfig.r_language_server.setup {}
 lspconfig.pyright.setup {}
 
@@ -107,11 +111,11 @@ local cmp = require'cmp'
 
 cmp.setup({
     completion = {
---        autocomplete = false
+        -- autocomplete = false
       keyword_length = 4
     },
     formatting = {
-      
+    -- formatting options      
     },
     snippet = {
       expand = function(args)
@@ -165,11 +169,12 @@ require 'cmp_nvim_r'.setup({
 -- Nvim-R
 vim.g.R_nvim_wd = 1
 vim.g.R_rconsole_width = 1
-vim.g.R_nvimpager = 'tab'
+vim.g.R_open_example = 0
+vim.g.R_nvimpager = 'no'
 vim.g.R_objbr_place = 'console,above'
 vim.g.R_assign_map = '<M-,>'
 vim.cmd[[ inoremap <M-.> <Space>%>%<CR> ]]
-vim.cmd[[ autocmd VimResized * let R_rconsole_width = winwidth(0) / 2 ]]
+vim.cmd[[ autocmd VimResized * let R_rconsole_width = winwidth(0) / 2 ]] -- this doesn't work apparently.
 
---ASyncRun
-vim.g.asyncrun_open = 1
+-- Rooter
+vim.g.rooter_patterns = { '.git', '_darcs', '.hg', 'src', 'scripts', 'Makefile' }
