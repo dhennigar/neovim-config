@@ -142,6 +142,7 @@ cmp.setup({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-e>'] = cmp.mapping.abort(),
+      ['<C-Tab>'] = cmp.mapping.complete()
     }),
     sources = cmp.config.sources({
       { name = 'cmp_nvim_r', max_item_count = 5},
@@ -152,11 +153,14 @@ cmp.setup({
     }),
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(':', {
+      completion = {
+          keyword_length = 4
+      },
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
-        { name = 'path' }
+        { name = 'path', max_item_count = 5 }
       }, {
-        { name = 'cmdline' }
+        { name = 'cmdline', max_item_count = 5 }
       })
     })
 })
