@@ -16,10 +16,12 @@ Plug('folke/tokyonight.nvim')
 Plug('ellisonleao/gruvbox.nvim')
 Plug('marko-cerovac/material.nvim')
 Plug('rockerBOO/boo-colorscheme-nvim')
+
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 
 Plug('jalvesaq/Nvim-R')
-Plug('jalvesaq/cmp-nvim-r')
+Plug('jalvesaq/cmp-nvim-r') -- allows for completion of environment objects
+-- Plug('jpalardy/vim-slime') -- more general solution to REPL
 
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/cmp-nvim-lsp')
@@ -36,6 +38,9 @@ Plug('junegunn/fzf', {['do'] = vim.fn['fzf#install']})
 Plug('junegunn/fzf.vim')
 
 vim.call('plug#end')
+
+-- vim-slime
+vim.g.slime_target = 'neovim'
 
 -- lsp bindings
 vim.api.nvim_create_autocmd('LspAttach', {
