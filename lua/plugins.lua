@@ -19,6 +19,8 @@ Plug('rockerBOO/boo-colorscheme-nvim')
 
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 
+Plug('windwp/nvim-autopairs')
+
 Plug('jalvesaq/Nvim-R')
 Plug('jalvesaq/cmp-nvim-r') -- allows for completion of environment objects
 -- Plug('jpalardy/vim-slime') -- more general solution to REPL
@@ -41,6 +43,9 @@ vim.call('plug#end')
 
 -- vim-slime
 vim.g.slime_target = 'neovim'
+
+-- autopairs
+require("nvim-autopairs").setup {}
 
 -- lsp bindings
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -113,6 +118,7 @@ lspconfig.pyright.setup {}
 
  -- Set up nvim-cmp.
 local cmp = require'cmp'
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
 cmp.setup({
     completion = {
@@ -147,7 +153,8 @@ cmp.setup({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<C-Tab>'] = cmp.mapping.complete()
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
       { name = 'cmp_nvim_r', max_item_count = 5},
@@ -170,6 +177,11 @@ cmp.setup({
     })
 })
 
+cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done()
+)
+
 require 'cmp_nvim_r'.setup({
       filetypes = {'r', 'rmd', 'quarto'},
       doc_width = 58
@@ -186,4 +198,4 @@ vim.cmd[[ inoremap <M-.> <Space>%>%<CR> ]]
 vim.cmd[[ autocmd VimResized * let R_rconsole_width = winwidth(0) / 2 ]] -- this doesn't work apparently.
 
 -- Rooter
-vim.g.rooter_patterns = { '.git', '_darcs', '.hg', 'src', 'scripts', 'Makefile' }
+vim.g.rooter_patterns = { '.git', '_darcs', '.hg', 'src', 'scripts', 'Makefile', '.renvignore', '.gitignore' }
