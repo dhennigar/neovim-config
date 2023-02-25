@@ -7,6 +7,11 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
     require("windows")
 end
 
+vim.api.nvim_create_autocmd( "UIEnter", {
+    once = true,
+    callback = function() require "ginit" end
+})
+
 -- basic settings
 
 vim.o.showtabline = 0
@@ -27,15 +32,15 @@ vim.o.smartindent = 1
 -- colors
 vim.o.termguicolors = 1
 vim.g.material_style = 'darker'
-vim.cmd [[colorscheme material]]
+vim.cmd [[ colorscheme material ]] -- find lua alternative
 
 -- better search
-vim.cmd([[ set path+=** ]])  -- find lua alternative
+vim.cmd [[ set path+=** ]]  -- find lua alternative
 vim.o.wildmenu = 1
 vim.o.incsearch = 1
 vim.o.hlsearch = 1
 vim.o.ic = 1
-vim.cmd([[ nnoremap <silent> <C-c> :let @/ = "" <CR> ]]) -- find lua alternative
+vim.cmd [[ nnoremap <silent> <C-c> :let @/ = "" <CR> ]] -- find lua alternative
 
 -- custom zettelkasten
 vim.cmd [[
