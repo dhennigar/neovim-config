@@ -1,6 +1,7 @@
 -- init.lua
 require("plugins")
 require("keybindings")
+require("zettelkasten")
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
     require("windows")
@@ -46,23 +47,3 @@ vim.keymap.set(
     ':let @/ = "" <CR>',
     { silent = true }
     )
-
--- custom zettelkasten
-vim.cmd [[
-    function! NewNote (title)
-        exec 'split ~/Notes/' . a:title . '.md'
-        exec 'normal!i# ' . a:title
-        exec '.s/-/ /g'
-    endfunction
-
-    function! SearchNotes ()
-        new
-        exec 'FZF ~/Notes/'
-    endfunction
-
-    command! -nargs=1 NewNote :call NewNote(<f-args>)
-    command! -nargs=0 SearchNotes :call SearchNotes()
-
-    nnoremap <leader>nn :NewNote<space>
-    nnoremap <leader>ns :SearchNotes<CR>
-]]
