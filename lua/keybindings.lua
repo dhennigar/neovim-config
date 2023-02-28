@@ -1,9 +1,5 @@
 -- keybindings.lua
 
--- leader keys
-vim.g.mapleader = ';'
-vim.g.maplocalleader = ';'
-
 -- open terminals in new vertical or horizontal split
 vim.keymap.set('n', '<leader>tt', ':new +term<CR>', { silent = true })
 vim.keymap.set('n', '<leader>tv', ':vnew +term<CR>', { silent = true })

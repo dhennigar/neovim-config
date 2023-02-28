@@ -1,13 +1,17 @@
 -- init.lua
+-- Daniel's Neovim init file.
+
 require("plugins")
 require("keybindings")
 require("zettelkasten")
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
+    -- Windows specific config
     require("windows")
 end
 
 vim.api.nvim_create_autocmd( "UIEnter", {
+    -- GUI settings for Nvim-Qt
     once = true,
     callback = function() require("ginit") end
 })
