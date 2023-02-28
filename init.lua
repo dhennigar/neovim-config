@@ -21,7 +21,7 @@ vim.o.signcolumn = 'yes'
 
 vim.g.maplocalleader = ';'
 vim.g.mapleader = ';'
-vim.o.cursorline = 1
+vim.o.cursorline = 0
 
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
@@ -40,23 +40,28 @@ vim.o.wildmenu = 1
 vim.o.incsearch = 1
 vim.o.hlsearch = 1
 vim.o.ic = 1
-vim.cmd [[ nnoremap <silent> <C-c> :let @/ = "" <CR> ]] -- find lua alternative
+vim.keymap.set(
+    'n',
+    '<C-c>',
+    ':let @/ = "" <CR>',
+    { silent = true }
+    )
 
 -- custom zettelkasten
 vim.cmd [[
-    function NewNote (title)
+    function! NewNote (title)
         exec 'split ~/Notes/' . a:title . '.md'
         exec 'normal!i# ' . a:title
         exec '.s/-/ /g'
     endfunction
 
-    function SearchNotes ()
+    function! SearchNotes ()
         new
         exec 'FZF ~/Notes/'
     endfunction
 
-    command -nargs=1 NewNote :call NewNote(<f-args>)
-    command -nargs=0 SearchNotes :call SearchNotes()
+    command! -nargs=1 NewNote :call NewNote(<f-args>)
+    command! -nargs=0 SearchNotes :call SearchNotes()
 
     nnoremap <leader>nn :NewNote<space>
     nnoremap <leader>ns :SearchNotes<CR>

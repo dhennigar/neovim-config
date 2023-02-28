@@ -23,7 +23,8 @@ Plug('windwp/nvim-autopairs')
 
 Plug('jalvesaq/Nvim-R')
 Plug('jalvesaq/cmp-nvim-r') -- allows for completion of environment objects
--- Plug('jpalardy/vim-slime') -- more general solution to REPL
+Plug('jalvesaq/zotcite')
+Plug('jpalardy/vim-slime') -- more general solution to REPL sending
 
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/cmp-nvim-lsp')
@@ -43,6 +44,17 @@ vim.call('plug#end')
 
 -- vim-slime
 vim.g.slime_target = 'neovim'
+-- redefine SlimeSend to avoid paste_file conflicts on Windows.
+vim.cmd [[
+    function SlimeOverrideSend(config, text)
+    call chansend(str2nr(a:config["jobid"]), split(a:text, "\n", 1))
+    " if b:slime_config is {"jobid": ""} and not configured
+    " then unset it for automatic configuration next time
+    if b:slime_config["jobid"]  == ""
+        unlet b:slime_config
+    endif
+    endfunction
+]]
 
 -- autopairs
 require("nvim-autopairs").setup {}
@@ -115,6 +127,8 @@ lspconfig.lua_ls.setup {
 }
 lspconfig.r_language_server.setup {}
 lspconfig.pyright.setup {}
+lspconfig.clangd.setup {}
+lspconfig.vimls.setup {}
 
  -- Set up nvim-cmp.
 local cmp = require'cmp'
@@ -122,7 +136,7 @@ local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
 cmp.setup({
     completion = {
-        -- autocomplete = false
+      -- autocomplete = false
       keyword_length = 4
     },
     formatting = {
@@ -138,18 +152,6 @@ cmp.setup({
       documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          local entry = cmp.get_selected_entry()
-        if not entry then
-          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-        else
-          cmp.confirm()
-        end
-        else
-          fallback()
-        end
-        end, {"i","s","c",}),
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-e>'] = cmp.mapping.abort(),
@@ -194,6 +196,7 @@ vim.g.R_open_example = 0
 vim.g.R_nvimpager = 'no'
 vim.g.R_objbr_place = 'console,above'
 vim.g.R_assign_map = '<M-,>'
+vim.g.R_rmdchunk = '<M-`>'
 vim.cmd[[ inoremap <M-.> <Space>%>%<CR> ]]
 vim.cmd[[ autocmd VimResized * let R_rconsole_width = winwidth(0) / 2 ]] -- this doesn't work apparently.
 

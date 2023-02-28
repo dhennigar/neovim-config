@@ -1,9 +1,8 @@
 -- windows.lua
 
-vim.cmd[[
+vim.cmd [[
     nnoremap <Leader>gp :cd D:\Projects<CR>
     nnoremap <Leader>gh :cd ~<CR>
-    nnoremap <Leader>gi :edit ~/AppData/Local/nvim/init.vim<CR>
 
     let &shell = has('win32') ? 'powershell' : 'pwsh'
     let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
@@ -12,5 +11,4 @@ vim.cmd[[
     set shellquote= shellxquote=
 
     set t_u7= " fix for windows terminal
-
 ]]
