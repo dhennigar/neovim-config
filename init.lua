@@ -1,5 +1,4 @@
 -- init.lua
-
 require("plugins")
 require("keybindings")
 
@@ -9,11 +8,10 @@ end
 
 vim.api.nvim_create_autocmd( "UIEnter", {
     once = true,
-    callback = function() require "ginit" end
+    callback = function() require("ginit") end
 })
 
 -- basic settings
-
 vim.o.showtabline = 0
 vim.o.laststatus = 2
 vim.o.cmdheight = 2
@@ -28,6 +26,8 @@ vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = 1
 vim.o.smartindent = 1
+
+vim.o.omnifunc = 'syntaxcomplete#Complete'
 
 -- colors
 vim.o.termguicolors = 1

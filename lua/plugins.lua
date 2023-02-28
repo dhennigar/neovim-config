@@ -24,7 +24,8 @@ Plug('windwp/nvim-autopairs')
 Plug('jalvesaq/Nvim-R')
 Plug('jalvesaq/cmp-nvim-r') -- allows for completion of environment objects
 Plug('jalvesaq/zotcite')
-Plug('jpalardy/vim-slime') -- more general solution to REPL sending
+Plug('jalvesaq/cmp-zotcite')
+-- Plug('jpalardy/vim-slime') -- more general solution to REPL sending
 
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/cmp-nvim-lsp')
@@ -43,18 +44,18 @@ Plug('junegunn/fzf.vim')
 vim.call('plug#end')
 
 -- vim-slime
-vim.g.slime_target = 'neovim'
+-- vim.g.slime_target = 'neovim'
 -- redefine SlimeSend to avoid paste_file conflicts on Windows.
-vim.cmd [[
-    function SlimeOverrideSend(config, text)
-    call chansend(str2nr(a:config["jobid"]), split(a:text, "\n", 1))
-    " if b:slime_config is {"jobid": ""} and not configured
-    " then unset it for automatic configuration next time
-    if b:slime_config["jobid"]  == ""
-        unlet b:slime_config
-    endif
-    endfunction
-]]
+-- vim.cmd [[
+--     function SlimeOverrideSend(config, text)
+--     call chansend(str2nr(a:config["jobid"]), split(a:text, "\n", 1))
+--     " if b:slime_config is {"jobid": ""} and not configured
+--     " then unset it for automatic configuration next time
+--     if b:slime_config["jobid"]  == ""
+--         unlet b:slime_config
+--     endif
+--     endfunction
+-- ]]
 
 -- autopairs
 require("nvim-autopairs").setup {}
@@ -156,12 +157,13 @@ cmp.setup({
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-e>'] = cmp.mapping.abort(),
       ['<C-Space>'] = cmp.mapping.complete(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({ select = false }),
     }),
     sources = cmp.config.sources({
-      { name = 'cmp_nvim_r', max_item_count = 5},
-      { name = 'nvim_lsp', max_item_count = 5},
-      { name = 'vsnip', max_item_count = 5}, -- For vsnip users.
+      { name = 'cmp_nvim_r', max_item_count = 5 },
+      { name = 'cmp_zotcite' },
+      { name = 'nvim_lsp', max_item_count = 5 },
+      { name = 'vsnip', max_item_count = 5 }, -- For vsnip users.
     }, {
       { name = 'buffer' },
     }),
@@ -189,16 +191,27 @@ require 'cmp_nvim_r'.setup({
       doc_width = 58
 })
 
--- Nvim-R
-vim.g.R_nvim_wd = 1
-vim.g.R_rconsole_width = 1
-vim.g.R_open_example = 0
-vim.g.R_nvimpager = 'no'
-vim.g.R_objbr_place = 'console,above'
-vim.g.R_assign_map = '<M-,>'
-vim.g.R_rmdchunk = '<M-`>'
-vim.cmd[[ inoremap <M-.> <Space>%>%<CR> ]]
-vim.cmd[[ autocmd VimResized * let R_rconsole_width = winwidth(0) / 2 ]] -- this doesn't work apparently.
+require 'cmp_zotcite'.setup {}
 
 -- Rooter
 vim.g.rooter_patterns = { '.git', '_darcs', '.hg', 'src', 'scripts', 'Makefile', '.renvignore', '.gitignore' }
+
+-- Nvim-R
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {"r", "rmd", "quarto"},
+    callback = function()
+        vim.g.R_nvim_wd = 1
+        vim.g.R_rconsole_width = 0
+        vim.g.R_open_example = 0
+        vim.g.R_nvimpager = 'no'
+        vim.g.R_objbr_auto_start = 1
+        vim.g.R_objbr_place = 'script,right'
+        vim.g.R_assign_map = '<M-,>'
+        vim.keymap.set('i', '<M-.>', '<Space>%>%<CR>')
+        vim.g.R_set_omnifunc = {'r', 'rmd', 'quarto', 'rnoweb', 'rhelp', 'rrst'}
+    end
+})
+
+-- zotcite
+vim.env.ZoteroSQLpath = 'D:/Zotero/zotero.sqlite'
