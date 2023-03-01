@@ -1,7 +1,5 @@
 -- init.lua
 -- Daniel's Neovim init file.
---
--- 
 
 require("plugins")
 require("keybindings")
