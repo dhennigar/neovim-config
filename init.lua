@@ -32,15 +32,15 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = 1
 vim.o.smartindent = 1
 
-vim.o.omnifunc = 'syntaxcomplete#Complete'
+vim.cmd.filetype({"plugin", "indent", "on"})
 
 -- colors
 vim.o.termguicolors = 1
 vim.g.material_style = 'darker'
-vim.cmd [[ colorscheme material ]] -- find lua alternative
+vim.cmd.colorscheme("material")
 
 -- better search
-vim.cmd [[ set path+=** ]]  -- find lua alternative
+vim.opt.path:append("**")
 vim.o.wildmenu = 1
 vim.o.incsearch = 1
 vim.o.hlsearch = 1

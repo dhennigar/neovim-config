@@ -153,21 +153,32 @@ cmp.setup({
       documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
+       ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            local entry = cmp.get_selected_entry()
+              if not entry then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+              else
+                cmp.confirm()
+            end
+          else
+            fallback()
+          end
+        end, {"i","s","c",}),
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<CR>'] = cmp.mapping.confirm({ select = false }),
+      ['<C-q>'] = cmp.mapping.abort(),
+      ['<S-Tab>'] = cmp.mapping.complete(),
     }),
     sources = cmp.config.sources({
       { name = 'cmp_nvim_r', max_item_count = 5 },
       { name = 'cmp_zotcite' },
       { name = 'nvim_lsp', max_item_count = 5 },
-      { name = 'vsnip', max_item_count = 5 }, -- For vsnip users.
+      { name = 'vsnip', max_item_count = 5 },
     }, {
       { name = 'buffer' },
     }),
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      -- Use cmdline & path source for ':'
     cmp.setup.cmdline(':', {
       completion = {
           keyword_length = 4
@@ -197,21 +208,16 @@ require 'cmp_zotcite'.setup {}
 vim.g.rooter_patterns = { '.git', '_darcs', '.hg', 'src', 'scripts', 'Makefile', '.renvignore', '.gitignore' }
 
 -- Nvim-R
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"r", "rmd", "quarto"},
-    callback = function()
-        vim.g.R_nvim_wd = 1
-        vim.g.R_rconsole_width = 0
-        vim.g.R_open_example = 0
-        vim.g.R_nvimpager = 'no'
-        vim.g.R_objbr_auto_start = 1
-        vim.g.R_objbr_place = 'script,right'
-        vim.g.R_assign_map = '<M-,>'
-        vim.keymap.set('i', '<M-.>', '<Space>%>%<CR>')
-        vim.g.R_set_omnifunc = {'r', 'rmd', 'quarto', 'rnoweb', 'rhelp', 'rrst'}
-    end
-})
+vim.g.R_nvim_wd = 1
+vim.g.R_rconsole_width = 0
+vim.g.R_open_example = 0
+vim.g.R_nvimpager = 'no'
+vim.g.R_objbr_auto_start = 1
+vim.g.R_objbr_place = 'script,right'
+vim.g.R_assign_map = '<M-,>'
+vim.keymap.set('i', '<M-.>', '<Space>%>%<CR>')
+vim.g.R_set_omnifunc = {'r', 'rmd', 'quarto', 'rnoweb', 'rhelp', 'rrst'}
 
 -- zotcite
 vim.env.ZoteroSQLpath = 'D:/Zotero/zotero.sqlite'
+
