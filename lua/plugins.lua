@@ -24,7 +24,7 @@ Plug('windwp/nvim-autopairs')
 Plug('jalvesaq/Nvim-R')
 Plug('jalvesaq/cmp-nvim-r') -- allows for completion of environment objects
 Plug('jalvesaq/zotcite')
-Plug('jalvesaq/cmp-zotcite')
+-- Plug('jalvesaq/cmp-zotcite')
 -- Plug('jpalardy/vim-slime') -- more general solution to REPL sending
 
 Plug('neovim/nvim-lspconfig')
@@ -40,6 +40,9 @@ Plug('airblade/vim-rooter')
 
 Plug('junegunn/fzf', {['do'] = vim.fn['fzf#install']})
 Plug('junegunn/fzf.vim')
+
+Plug('vim-pandoc/vim-pandoc')
+Plug('vim-pandoc/vim-pandoc-syntax')
 
 vim.call('plug#end')
 
@@ -172,7 +175,7 @@ cmp.setup({
     }),
     sources = cmp.config.sources({
       { name = 'cmp_nvim_r', max_item_count = 5 },
-      { name = 'cmp_zotcite' },
+      -- { name = 'cmp_zotcite' },
       { name = 'nvim_lsp', max_item_count = 5 },
       { name = 'vsnip', max_item_count = 5 },
     }, {
@@ -202,7 +205,7 @@ require 'cmp_nvim_r'.setup({
       doc_width = 58
 })
 
-require 'cmp_zotcite'.setup {}
+-- require 'cmp_zotcite'.setup {}
 
 -- Rooter
 vim.g.rooter_patterns = { '.git', '_darcs', '.hg', 'src', 'scripts', 'Makefile', '.renvignore', '.gitignore' }
@@ -219,5 +222,5 @@ vim.keymap.set('i', '<M-.>', '<Space>%>%<CR>')
 vim.g.R_set_omnifunc = {'r', 'rmd', 'quarto', 'rnoweb', 'rhelp', 'rrst'}
 
 -- zotcite
-vim.env.ZoteroSQLpath = 'D:/Zotero/zotero.sqlite'
+-- vim.env.ZoteroSQLpath = 'D:/Zotero/zotero.sqlite'
 

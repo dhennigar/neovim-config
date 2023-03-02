@@ -1,19 +1,19 @@
 -- init.lua
 -- Daniel's Neovim init file.
 
-require("plugins")
-require("keybindings")
-require("zettelkasten")
+require('plugins')
+require('keybindings')
+require('zettelkasten')
 
-if vim.loop.os_uname().sysname == "Windows_NT" then
+if vim.loop.os_uname().sysname == 'Windows_NT' then
     -- Windows specific config
-    require("windows")
+    require('windows')
 end
 
-vim.api.nvim_create_autocmd( "UIEnter", {
+vim.api.nvim_create_autocmd( 'UIEnter', {
     -- GUI settings for Nvim-Qt
     once = true,
-    callback = function() require("ginit") end
+    callback = function() require('ginit') end
 })
 
 -- basic settings
@@ -32,15 +32,16 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = 1
 vim.o.smartindent = 1
 
-vim.cmd.filetype({"plugin", "indent", "on"})
+vim.cmd.filetype({'plugin', 'indent', 'on'})
 
 -- colors
 vim.o.termguicolors = 1
 vim.g.material_style = 'darker'
-vim.cmd.colorscheme("material")
+-- vim.g.material_style = 'lighter'
+vim.cmd.colorscheme('material')
 
 -- better search
-vim.opt.path:append("**")
+vim.opt.path:append('**')
 vim.o.wildmenu = 1
 vim.o.incsearch = 1
 vim.o.hlsearch = 1
