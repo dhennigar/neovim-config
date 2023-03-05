@@ -5,7 +5,7 @@ local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.setup({
     completion = {
       -- autocomplete = false
-      keyword_length = 4
+      keyword_length = 3
     },
     formatting = {
     -- formatting options      
@@ -23,11 +23,11 @@ cmp.setup({
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           local entry = cmp.get_selected_entry()
-            if not entry then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-              cmp.confirm()
-            else
-              cmp.confirm()
+          if not entry then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            cmp.confirm()
+          else
+            cmp.confirm()
           end
         else
           fallback()
@@ -36,7 +36,6 @@ cmp.setup({
       ['<CR>'] = cmp.mapping.confirm(),
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-q>'] = cmp.mapping.abort(),
       ['<C-/>'] = cmp.mapping(function()
           if cmp.visible() then
               cmp.abort()
@@ -47,9 +46,9 @@ cmp.setup({
 
     }),
     sources = cmp.config.sources({
-      { name = 'cmp_nvim_r', max_item_count = 5 },
-      { name = 'nvim_lsp', max_item_count = 5 },
-      { name = 'luasnip', max_item_count = 5 },
+      { name = 'cmp_nvim_r', max_item_count = 7 },
+      { name = 'nvim_lsp', max_item_count = 7 },
+      { name = 'luasnip', max_item_count = 7 },
     }, {
       { name = 'buffer' },
     }),

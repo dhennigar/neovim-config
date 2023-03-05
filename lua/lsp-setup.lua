@@ -36,7 +36,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     bufmap('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
 
     -- Show diagnostics in a floating window
-    bufmap('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
+    bufmap('n', '\\l', '<cmd>lua vim.diagnostic.open_float()<cr>')
 
     -- Move to the previous diagnostic
     bufmap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
