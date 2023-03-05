@@ -65,3 +65,6 @@ require('lspconfig')['lua_ls'].setup{
         }
     }
 }
+
+-- omnicompletion trigger
+vim.keymap.set('i', '<C-/>', '<C-x><C-o>')
