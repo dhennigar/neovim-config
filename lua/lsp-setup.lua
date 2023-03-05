@@ -36,7 +36,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     bufmap('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
 
     -- Show diagnostics in a floating window
-    bufmap('n', '\\l', '<cmd>lua vim.diagnostic.open_float()<cr>')
+    bufmap('n', '\\d', '<cmd>lua vim.diagnostic.open_float()<cr>')
 
     -- Move to the previous diagnostic
     bufmap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
@@ -63,6 +63,18 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
   update_in_insert = false,
 })
 
+local servers = {'r_language_server',
+                 'pyright',
+                 'clangd',
+                 'vimls',
+                 'fortls',
+                 'julials'
+             }
+
+for _, lsp in ipairs(servers) do
+    lspconfig[lsp].setup {}
+end
+
 lspconfig.lua_ls.setup {
     settings = {
         Lua = {
@@ -72,8 +84,9 @@ lspconfig.lua_ls.setup {
         },
     },
 }
-lspconfig.r_language_server.setup {}
-lspconfig.pyright.setup {}
-lspconfig.clangd.setup {}
-lspconfig.vimls.setup {}
+
+-- lspconfig.r_language_server.setup {}
+-- lspconfig.pyright.setup {}
+-- lspconfig.clangd.setup {}
+-- lspconfig.vimls.setup {}
 
