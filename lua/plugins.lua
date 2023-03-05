@@ -4,6 +4,7 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 
+Plug('neovim/nvim-lspconfig')
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 
 Plug('tpope/vim-surround')
@@ -13,7 +14,6 @@ Plug('tpope/vim-vinegar')
 Plug('tpope/vim-flagship')
 Plug('tpope/vim-abolish')
 
--- Plug("mtikekar/nvim-send-to-term")
 Plug('https://gitlab.com/HiPhish/repl.nvim')
 Plug('airblade/vim-rooter')
 Plug('windwp/nvim-autopairs')
@@ -24,7 +24,6 @@ Plug('jalvesaq/cmp-nvim-r')
 Plug('vim-pandoc/vim-pandoc')
 Plug('vim-pandoc/vim-pandoc-syntax')
 
-Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-nvim-lsp')
 Plug('hrsh7th/cmp-cmdline')

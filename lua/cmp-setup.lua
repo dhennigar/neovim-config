@@ -36,7 +36,7 @@ cmp.setup({
       ['<CR>'] = cmp.mapping.confirm(),
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-/>'] = cmp.mapping(function()
+      ['<M-/>'] = cmp.mapping(function()
           if cmp.visible() then
               cmp.abort()
           else
@@ -75,5 +75,4 @@ require 'cmp_nvim_r'.setup({
       filetypes = {'r', 'rmd', 'quarto'},
       doc_width = 58
 })
-
 
