@@ -12,7 +12,7 @@ cmp.setup({
     },
     snippet = {
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+        require('luasnip').lsp_expand(args.body)
       end,
     },
     window = {
@@ -49,7 +49,7 @@ cmp.setup({
     sources = cmp.config.sources({
       { name = 'cmp_nvim_r', max_item_count = 5 },
       { name = 'nvim_lsp', max_item_count = 5 },
-      { name = 'vsnip', max_item_count = 5 },
+      { name = 'luasnip', max_item_count = 5 },
     }, {
       { name = 'buffer' },
     }),
