@@ -37,7 +37,7 @@ cmp.setup({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-q>'] = cmp.mapping.abort(),
-      ['<C-space>'] = cmp.mapping(function()
+      ['<C-/>'] = cmp.mapping(function()
           if cmp.visible() then
               cmp.abort()
           else

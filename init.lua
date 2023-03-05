@@ -4,6 +4,7 @@
 require('keybindings')
 require('ginit')
 require('plugins')
+-- require('lsp-minimal')
 require('lsp-setup')
 require('cmp-setup')
 require('zettelkasten')
@@ -19,8 +20,8 @@ vim.o.laststatus = 2
 vim.o.cmdheight = 2
 vim.o.signcolumn = 'yes'
 
-vim.g.maplocalleader = ';'
-vim.g.mapleader = ';'
+vim.o.maplocalleader = ';'
+vim.o.mapleader = ';'
 vim.o.cursorline = 0
 
 vim.o.tabstop = 4
@@ -30,6 +31,7 @@ vim.o.expandtab = 1
 vim.o.smartindent = 1
 
 vim.cmd.filetype({'plugin', 'indent', 'on'})
+vim.o.completeopt = 'menuone'
 
 -- colors
 vim.o.termguicolors = 1
