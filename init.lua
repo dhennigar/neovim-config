@@ -1,20 +1,17 @@
 -- init.lua
 -- Daniel's Neovim init file.
 
-require('plugins')
 require('keybindings')
+require('ginit')
+require('plugins')
+require('lsp-setup')
+require('cmp-setup')
 require('zettelkasten')
 
 if vim.loop.os_uname().sysname == 'Windows_NT' then
     -- Windows specific config
     require('windows')
 end
-
-vim.api.nvim_create_autocmd( 'UIEnter', {
-    -- GUI settings for Nvim-Qt
-    once = true,
-    callback = function() require('ginit') end
-})
 
 -- basic settings
 vim.o.showtabline = 0
